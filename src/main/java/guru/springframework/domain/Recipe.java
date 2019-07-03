@@ -23,8 +23,8 @@ public class Recipe  {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipe")
     private Set<Ingredient> ingredients;
 
-    // TODO ADD
-    //private Difficulty difficulty
+    @Enumerated(value = EnumType.STRING)
+    private Difficulty difficulty;
 
     @Lob
     private byte[] image;
@@ -94,6 +94,22 @@ public class Recipe  {
 
     public void setDirections(String directions) {
         this.directions = directions;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
     }
 
     public byte[] getImage() {
