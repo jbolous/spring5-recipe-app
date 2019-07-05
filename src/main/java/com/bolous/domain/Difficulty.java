@@ -1,4 +1,4 @@
-package guru.springframework.domain;
+package com.bolous.domain;
 
 
 public enum Difficulty {
