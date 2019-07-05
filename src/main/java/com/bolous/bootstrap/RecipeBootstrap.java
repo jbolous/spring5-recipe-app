@@ -6,6 +6,7 @@ import com.bolous.exceptions.UnitOfMeasureException;
 import com.bolous.repositories.CategoryRepository;
 import com.bolous.repositories.RecipeRepository;
 import com.bolous.repositories.UnitOfMeasureRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -23,6 +25,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private UnitOfMeasureRepository unitOfMeasureRepository;
 
     public RecipeBootstrap(CategoryRepository categoryRepository, RecipeRepository recipeRepository, UnitOfMeasureRepository unitOfMeasureRepository) {
+        log.debug("In Constructor...");
         this.categoryRepository = categoryRepository;
         this.recipeRepository = recipeRepository;
         this.unitOfMeasureRepository = unitOfMeasureRepository;
@@ -30,11 +33,14 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        log.debug("In application event...");
         recipeRepository.saveAll(getRecipes());
     }
 
     private List<Recipe> getRecipes(){
         List<Recipe> recipes = new ArrayList<>();
+
+        log.debug("Building the recipes...");
 
         // Get Units of Measure
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
@@ -121,6 +127,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
      * @return
      */
     private Recipe getGuacamoleRecipe(UnitOfMeasure eachUom, UnitOfMeasure tablespoonUom, UnitOfMeasure teaspoonUom, UnitOfMeasure dashUom, Category americanCategory, Category mexicanCategory) {
+
+        log.debug("Build yummy guacamole recipe");
+
         // Yummy Guacamole
         Recipe recipe = new Recipe();
 
@@ -187,6 +196,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
 
     private Recipe getTacosRecipe(UnitOfMeasure tablespoonUom, UnitOfMeasure teaspoonUom, UnitOfMeasure eachUom, UnitOfMeasure cupUom, UnitOfMeasure pintUom, Category mexicanCategory, Category americanCategory){
+
+        log.debug("Build Spicy Chicken Tacos recipe...");
+
         Recipe recipe = new Recipe();
 
         recipe.setDescription("Spicy Grilled Chicken Tacos");
