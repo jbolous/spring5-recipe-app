@@ -1,11 +1,13 @@
 package com.bolous.domain;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Ingredient {
 
@@ -21,6 +23,10 @@ public class Ingredient {
 
     @ManyToOne
     private Recipe recipe;
+
+    public Ingredient(){
+
+    }
 
     public Ingredient(String description, BigDecimal amount, UnitOfMeasure uom) {
         this.description = description;
