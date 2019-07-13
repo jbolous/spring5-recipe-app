@@ -6,7 +6,7 @@ import com.bolous.exceptions.UnitOfMeasureException;
 import com.bolous.repositories.CategoryRepository;
 import com.bolous.repositories.RecipeRepository;
 import com.bolous.repositories.UnitOfMeasureRepository;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Slf4j
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
+    private static final Logger log = org.slf4j.LoggerFactory.getLogger(RecipeBootstrap.class);
     private CategoryRepository categoryRepository;
     private RecipeRepository recipeRepository;
     private UnitOfMeasureRepository unitOfMeasureRepository;
@@ -42,7 +42,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     private List<Recipe> getRecipes(){
         List<Recipe> recipes = new ArrayList<>();
 
-        log.debug("Building the recipes...");
+        log.debug("Building the recipe...");
 
         // Get Units of Measure
         Optional<UnitOfMeasure> eachUomOptional = unitOfMeasureRepository.findByDescription("Each");
@@ -120,13 +120,13 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
     /**
      * Build guacamole recipe
-     * @param eachUom
-     * @param tablespoonUom
-     * @param teaspoonUom
-     * @param dashUom
-     * @param americanCategory
-     * @param mexicanCategory
-     * @return
+     * @param eachUom Each Unit of Measure
+     * @param tablespoonUom Tablespoon Unit of Measure
+     * @param teaspoonUom Teaspoon Unit of Measure
+     * @param dashUom Dash Unit of Measure
+     * @param americanCategory American Category
+     * @param mexicanCategory Mexican Category
+     * @return Recipe
      */
     private Recipe getGuacamoleRecipe(UnitOfMeasure eachUom, UnitOfMeasure tablespoonUom, UnitOfMeasure teaspoonUom, UnitOfMeasure dashUom, Category americanCategory, Category mexicanCategory) {
 

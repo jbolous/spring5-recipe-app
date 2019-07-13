@@ -1,13 +1,11 @@
 package com.bolous.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Data
-@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Ingredient {
 

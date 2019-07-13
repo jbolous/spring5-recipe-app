@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class IndexControllerTest {
 
-    IndexController indexController;
+    private IndexController indexController;
 
     @Mock
     RecipeService recipeService;
@@ -31,7 +31,7 @@ public class IndexControllerTest {
     Model model;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
 
         MockitoAnnotations.initMocks(this );
 
@@ -70,7 +70,7 @@ public class IndexControllerTest {
 
         assertEquals("index", page);
         verify(recipeService, times(1)).getRecipes();
-        verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
+        verify(model, times(1)).addAttribute(eq("recipe"), argumentCaptor.capture());
         Set<Recipe> recipeSet = argumentCaptor.getValue();
         assertEquals(2, recipeSet.size());
     }

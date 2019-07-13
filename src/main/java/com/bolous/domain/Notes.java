@@ -1,12 +1,10 @@
 package com.bolous.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
 @Data
-@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {
 
@@ -25,6 +23,10 @@ public class Notes {
 
     public Notes(String recipeNotes) {
         this.recipeNotes = recipeNotes;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof Notes;
     }
 
 }
