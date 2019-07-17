@@ -1,5 +1,7 @@
 package com.bolous.services;
 
+import com.bolous.converters.RecipeCommandToRecipe;
+import com.bolous.converters.RecipeToRecipeCommand;
 import com.bolous.domain.Recipe;
 import com.bolous.repositories.RecipeRepository;
 import org.junit.Before;
@@ -20,13 +22,19 @@ public class RecipeServiceImplTest {
     private RecipeServiceImpl recipeService;
 
     @Mock
-    RecipeRepository recipeRepository;
+    private RecipeRepository recipeRepository;
+
+    @Mock
+    private RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    private RecipeCommandToRecipe recipeCommandToRecipe;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this );
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
@@ -59,4 +67,5 @@ public class RecipeServiceImplTest {
         verify(recipeRepository, never()).findAll();
 
     }
+
 }

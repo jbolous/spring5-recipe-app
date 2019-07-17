@@ -1,23 +1,33 @@
 package com.bolous.services;
 
+import com.bolous.commands.RecipeCommand;
+import com.bolous.converters.RecipeCommandToRecipe;
+import com.bolous.converters.RecipeToRecipeCommand;
 import com.bolous.domain.Recipe;
 import com.bolous.exceptions.RecipeNotFoundException;
 import com.bolous.repositories.RecipeRepository;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Service
 public class RecipeServiceImpl implements RecipeService {
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(RecipeServiceImpl.class);
-    private final RecipeRepository recipeRepository;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    private final RecipeRepository recipeRepository;
+    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
+
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe,
+                             RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
@@ -39,5 +49,16 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
         return recipeOptional.get();
+    }
+
+    @Override
+    @Transactional
+    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+
+        Recipe recipe = recipeCommandToRecipe.convert(command);
+        recipe = recipeRepository.save(recipe);
+
+        log.debug("Saved RecipeID: " + recipe.getId());
+        return recipeToRecipeCommand.convert(recipe);
     }
 }
