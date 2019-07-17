@@ -20,8 +20,4 @@ public class UnitOfMeasure {
     public UnitOfMeasure() {
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof UnitOfMeasure;
-    }
-
 }
