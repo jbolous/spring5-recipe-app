@@ -10,5 +10,5 @@ You can learn about my Spring Framework 5 Online course [here.](https://go.sprin
 * Renamed packages to use com.bolous
 * Added exceptions for Category and UnitOfMeasure
 
-#Project Lombok
+# Project Lombok
 This project has been setup with Project Lokbok
