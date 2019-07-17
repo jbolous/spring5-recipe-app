@@ -70,7 +70,7 @@ public class IndexControllerTest {
 
         assertEquals("index", page);
         verify(recipeService, times(1)).getRecipes();
-        verify(model, times(1)).addAttribute(eq("recipe"), argumentCaptor.capture());
+        verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
         Set<Recipe> recipeSet = argumentCaptor.getValue();
         assertEquals(2, recipeSet.size());
     }
