@@ -1,11 +1,14 @@
 package com.bolous.services;
 
 import com.bolous.commands.IngredientCommand;
+import com.bolous.converters.IngredientCommandToIngredient;
 import com.bolous.converters.IngredientToIngredientCommand;
+import com.bolous.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import com.bolous.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.bolous.domain.Ingredient;
 import com.bolous.domain.Recipe;
 import com.bolous.repositories.RecipeRepository;
+import com.bolous.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -19,23 +22,28 @@ import static org.mockito.Mockito.*;
 
 public class IngredientServiceImplTest {
 
+    private final IngredientToIngredientCommand ingredientToIngredientCommand;
+    private final IngredientCommandToIngredient ingredientCommandToIngredient;
+
     @Mock
     private RecipeRepository recipeRepository;
 
+    @Mock
+    private UnitOfMeasureRepository unitOfMeasureRepository;
+
     private IngredientService ingredientService;
 
-    private final IngredientToIngredientCommand ingredientToIngredientCommand;
-
-    // init converters
+    //init converters
     public IngredientServiceImplTest() {
-        ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
     }
-
     @Before
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, recipeRepository);
+        ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
+                recipeRepository, unitOfMeasureRepository);
     }
 
     @Test
