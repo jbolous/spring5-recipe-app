@@ -7,6 +7,7 @@ import com.bolous.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import com.bolous.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.bolous.domain.Ingredient;
 import com.bolous.domain.Recipe;
+import com.bolous.repositories.IngredientRepository;
 import com.bolous.repositories.RecipeRepository;
 import com.bolous.repositories.UnitOfMeasureRepository;
 import org.junit.Before;
@@ -33,6 +34,9 @@ public class IngredientServiceImplTest {
 
     private IngredientService ingredientService;
 
+    @Mock
+    private IngredientRepository ingredientRepository;
+
     //init converters
     public IngredientServiceImplTest() {
         this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
@@ -43,7 +47,7 @@ public class IngredientServiceImplTest {
         MockitoAnnotations.initMocks(this);
 
         ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, ingredientCommandToIngredient,
-                recipeRepository, unitOfMeasureRepository);
+                recipeRepository, unitOfMeasureRepository, ingredientRepository);
     }
 
     @Test
