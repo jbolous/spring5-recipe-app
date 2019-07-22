@@ -5,8 +5,9 @@ import com.bolous.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import com.bolous.repositories.UnitOfMeasureRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 public class UnitOfMeasureServiceImpl implements UnitOfMeasureService {
@@ -22,10 +23,9 @@ public class UnitOfMeasureServiceImpl implements UnitOfMeasureService {
 
     public Set<UnitOfMeasureCommand> listAllUnitOfMeasures() {
 
-        Set<UnitOfMeasureCommand> unitOfMeasureCommand = new HashSet<>();
-
-        unitOfMeasureRepository.findAll().forEach(unitOfMeasure -> unitOfMeasureCommand.add(unitOfMeasureToUnitOfMeasureCommand.convert(unitOfMeasure)));
-
-        return unitOfMeasureCommand;
+        return StreamSupport.stream(unitOfMeasureRepository.findAll()
+                .spliterator(), false)
+                .map(unitOfMeasureToUnitOfMeasureCommand::convert)
+                .collect(Collectors.toSet());
     }
 }

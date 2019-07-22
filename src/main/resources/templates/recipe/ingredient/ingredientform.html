@@ -44,7 +44,6 @@
 
                                 <div class="col-md-3 form-group">
                                     <label>UOM:</label>
-                                    <!-- TODO: Fix mapping issue for id -->
                                     <select class="form-control" name="unitOfMeasure.id">
                                         <option th:each="uomEach : ${uomList}"
                                                 th:value="${uomEach.id}"

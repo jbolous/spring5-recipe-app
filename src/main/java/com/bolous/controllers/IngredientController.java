@@ -1,6 +1,8 @@
 package com.bolous.controllers;
 
 import com.bolous.commands.IngredientCommand;
+import com.bolous.commands.RecipeCommand;
+import com.bolous.commands.UnitOfMeasureCommand;
 import com.bolous.services.IngredientService;
 import com.bolous.services.RecipeService;
 import com.bolous.services.UnitOfMeasureService;
@@ -63,5 +65,24 @@ public class IngredientController {
         log.debug("saved ingredient id: " + savedCommand.getId());
 
         return "redirect:/recipe/" + savedCommand.getRecipeId() + "/ingredient/" + savedCommand.getId() + "/show";
+    }
+
+    @GetMapping
+    @RequestMapping("/recipe/{recipeId}/ingredient/new")
+    public String addNewIngredient(@PathVariable String recipeId, Model model){
+
+        // Make sure we have a valid recipe id
+        RecipeCommand recipeCommand = recipeService.findCommandById(Long.valueOf(recipeId));
+        // todo raise exception if null
+
+        // need to return parent id form hidden form property
+        IngredientCommand ingredientCommand = new IngredientCommand();
+        ingredientCommand.setRecipeId(Long.valueOf(recipeId));
+        model.addAttribute("ingredient",ingredientCommand);
+
+        ingredientCommand.setUnitOfMeasure(new UnitOfMeasureCommand());
+        model.addAttribute("uomList", unitOfMeasureService.listAllUnitOfMeasures());
+
+        return "recipe/ingredient/ingredientform";
     }
 }
