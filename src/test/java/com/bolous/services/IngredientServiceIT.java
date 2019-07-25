@@ -30,6 +30,6 @@ public class IngredientServiceIT {
         // then this should throw an exception
         IngredientCommand ingredientCommand = ingredientService.findByRecipeIdAndIngredientId(recipeId, ingredientId);
 
-        System.out.println(ingredientCommand);
+        System.out.println(ingredientCommand.toString());
     }
 }

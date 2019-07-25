@@ -33,7 +33,7 @@ public class Recipe  {
     private Difficulty difficulty;
 
     @Lob
-    private byte[] image;
+    private Byte[] image;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Notes notes;
