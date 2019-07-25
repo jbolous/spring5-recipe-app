@@ -74,7 +74,7 @@ public class IngredientController {
 
         ingredientService.deleteByRecipeIdAndIngredientId(Long.valueOf(recipeId), Long.valueOf(id));
 
-        return "redirect:/recipe/" + recipeId;
+        return "redirect:/recipe/" + recipeId + "/ingredients";
     }
 
     @GetMapping

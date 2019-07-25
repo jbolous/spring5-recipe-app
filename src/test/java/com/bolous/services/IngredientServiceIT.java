@@ -1,6 +1,7 @@
 package com.bolous.services;
 
 import com.bolous.commands.IngredientCommand;
+import com.bolous.exceptions.IngredientNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class IngredientServiceIT {
     private IngredientService ingredientService;
 
     @Transactional
-    @Test//(expected = IngredientNotFoundException.class)
+    @Test(expected = IngredientNotFoundException.class)
     public void deleteByRecipeIdAndIngredientID() {
 
         Long recipeId = 1L;
