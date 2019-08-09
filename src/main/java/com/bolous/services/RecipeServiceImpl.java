@@ -41,7 +41,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe findById(Long id) {
+    public Recipe  findById(Long id) {
         Optional<Recipe> recipeOptional = this.recipeRepository.findById(id);
 
         if(!recipeOptional.isPresent()){
