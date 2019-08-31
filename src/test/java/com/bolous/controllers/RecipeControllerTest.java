@@ -2,7 +2,6 @@ package com.bolous.controllers;
 
 import com.bolous.commands.RecipeCommand;
 import com.bolous.domain.Recipe;
-import com.bolous.exceptions.NotFoundException;
 import com.bolous.exceptions.RecipeNotFoundException;
 import com.bolous.repositories.RecipeRepository;
 import com.bolous.services.RecipeService;
@@ -13,8 +12,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -108,6 +105,16 @@ public class RecipeControllerTest {
         when(recipeService.findById(anyLong())).thenThrow(RecipeNotFoundException.class);
 
         mockMvc.perform(get("/recipe/1/show"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(view().name("404error"));
+    }
+
+    @Test
+    public void testGetRecipeNumberFormatException() throws Exception {
+
+        mockMvc.perform(get("/recipe/asdf/show"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"))
+                .andExpect(model().attributeExists("exception"));
     }
 }

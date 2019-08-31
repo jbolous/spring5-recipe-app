@@ -10,6 +10,10 @@ public class RecipeNotFoundException extends RuntimeException {
         super("Recipe Not Found!");
     }
 
+    public RecipeNotFoundException(Long id){
+        super("Recipe not Found! For ID value: " + id.toString());
+    }
+
     public RecipeNotFoundException(String message){
         super(message);
     }
